@@ -3,14 +3,9 @@ image = zeros(size(img));
     if ismatrix(img)
         [r, ~] = size(img);
         for i = 1: r
-            s = sum(exp(img(i, :)));
-            if s == inf
-                image(i, :) = 0;
-            else
-            image(i, :) = exp(img(i, :)) / s;
-            end
+            image(i, :) = exp(img(i, :) - max(img(i, :))) / sum(exp(img(i, :) - max(img(i, :))));
         end
     else
-        image = exp(img) / sum(exp(img));
+        image = exp(img - max(img)) / sum(exp(img - max(img)));
     end
 end
